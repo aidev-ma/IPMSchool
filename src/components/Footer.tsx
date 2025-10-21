@@ -1,4 +1,5 @@
-import { GraduationCap, Facebook, Instagram, Linkedin } from "lucide-react";
+import { Facebook, Instagram, Linkedin } from "lucide-react";
+import ipmsLogo from "@/assets/ipms-logo.jpg";
 
 const Footer = () => {
   return (
@@ -6,14 +7,14 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div className="col-span-2">
-            <div className="flex items-center space-x-2 mb-4">
-              <GraduationCap className="h-8 w-8 text-primary" />
+            <div className="flex items-center space-x-3 mb-4">
+              <img src={ipmsLogo} alt="IPMS Logo" className="h-10 w-auto object-contain" />
               <span className="font-display font-bold text-xl text-foreground">
-                École Infirmière Excellence
+                IPMS
               </span>
             </div>
             <p className="text-muted-foreground mb-4">
-              Former les professionnels de santé de demain avec excellence et passion.
+              International Private Medical School - Former les professionnels de santé de demain avec excellence et passion.
             </p>
             <div className="flex space-x-4">
               <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
@@ -82,7 +83,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-border pt-8 text-center text-muted-foreground">
-          <p>© 2025 École Infirmière Excellence. Tous droits réservés.</p>
+          <p>© 2025 IPMS - International Private Medical School. Tous droits réservés.</p>
         </div>
       </div>
     </footer>
