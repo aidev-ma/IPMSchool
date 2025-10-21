@@ -16,11 +16,8 @@ const Navbar = () => {
     <nav className="fixed top-0 w-full bg-background/95 backdrop-blur-sm border-b border-border z-50 shadow-soft">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => scrollToSection('accueil')}>
+          <div className="cursor-pointer" onClick={() => scrollToSection('accueil')}>
             <img src={ipmsLogo} alt="IPMS Logo" className="h-12 w-auto object-contain" />
-            <span className="font-display font-bold text-xl text-foreground">
-              IPMS
-            </span>
           </div>
 
           {/* Desktop Navigation */}

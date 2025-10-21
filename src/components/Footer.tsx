@@ -7,11 +7,8 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div className="col-span-2">
-            <div className="flex items-center space-x-3 mb-4">
+            <div className="mb-4">
               <img src={ipmsLogo} alt="IPMS Logo" className="h-10 w-auto object-contain" />
-              <span className="font-display font-bold text-xl text-foreground">
-                IPMS
-              </span>
             </div>
             <p className="text-muted-foreground mb-4">
               International Private Medical School - Former les professionnels de santé de demain avec excellence et passion.
