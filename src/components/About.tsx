@@ -1,12 +1,13 @@
 import { CheckCircle2 } from "lucide-react";
 
 const features = [
-  "Plus de 25 ans d'excellence en formation infirmière",
-  "Taux de réussite aux examens de 95%",
-  "Partenariats avec 50+ établissements de santé",
-  "Équipe pédagogique composée de professionnels en exercice",
-  "Équipements de simulation de dernière génération",
-  "Accompagnement personnalisé tout au long de la formation",
+  "Institut accrédité par l'État pour ses formations paramédicales",
+  "Sous tutelle du Secrétariat d'État chargé de la Formation Professionnelle",
+  "Programmes conformes aux standards nationaux du secteur de la santé",
+  "Stages encadrés dans des structures hospitalières publiques et privées",
+  "Pédagogie en alternance théorie, pratique et terrain",
+  "Équipe pédagogique composée de professionnels de santé en exercice",
+  "Accompagnement personnalisé vers l'insertion professionnelle",
 ];
 
 const About = () => {
