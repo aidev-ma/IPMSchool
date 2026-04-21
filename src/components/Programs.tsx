@@ -4,15 +4,11 @@ import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 import classroomImage from "@/assets/classroom.jpg";
 import practiceImage from "@/assets/practice.jpg";
-import polyvalentImage from "@/assets/program-polyvalent.jpg";
-import auxiliaireImage from "@/assets/program-auxiliaire.jpg";
-import aideSoignantImage from "@/assets/program-aide-soignant.jpg";
 
 const programs = [
   {
     icon: Stethoscope,
     slug: "infirmier-polyvalent",
-    image: polyvalentImage,
     title: "Infirmier(ère) Polyvalent(e)",
     duration: "3 ans",
     admission: "Bac toutes disciplines",
@@ -22,7 +18,6 @@ const programs = [
   {
     icon: HeartPulse,
     slug: "infirmier-auxiliaire",
-    image: auxiliaireImage,
     title: "Infirmier(ère) Auxiliaire",
     duration: "2 ans",
     admission: "Niveau Bac toutes disciplines",
@@ -32,7 +27,6 @@ const programs = [
   {
     icon: UserCheck,
     slug: "aide-soignant",
-    image: aideSoignantImage,
     title: "Aide-Soignant(e)",
     duration: "12 mois",
     admission: "Niveau 3ème année collège",
@@ -58,21 +52,11 @@ const Programs = () => {
           {programs.map((program, index) => {
             const Icon = program.icon;
             return (
-              <Card key={index} className="border-2 hover:shadow-medium transition-all duration-300 hover:-translate-y-1 flex flex-col overflow-hidden">
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={program.image}
-                    alt={program.title}
-                    loading="lazy"
-                    width={1024}
-                    height={640}
-                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                  />
-                  <div className="absolute top-3 left-3 w-11 h-11 rounded-lg bg-gradient-hero flex items-center justify-center shadow-medium">
-                    <Icon className="h-5 w-5 text-primary-foreground" />
-                  </div>
-                </div>
+              <Card key={index} className="border-2 hover:shadow-medium transition-all duration-300 hover:-translate-y-1 flex flex-col">
                 <CardHeader>
+                  <div className="w-12 h-12 rounded-lg bg-gradient-hero flex items-center justify-center mb-4">
+                    <Icon className="h-6 w-6 text-primary-foreground" />
+                  </div>
                   <CardTitle className="text-xl">{program.title}</CardTitle>
                   <CardDescription className="text-primary font-semibold">
                     Durée: {program.duration}
