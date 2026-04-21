@@ -17,13 +17,14 @@ const About = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-6">
-              Une École d'Excellence Reconnue
+              Un Institut Accrédité au Service de la Santé
             </h2>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Notre école forme les infirmiers et infirmières de demain avec un engagement
-              sans faille envers l'excellence académique et la pratique clinique. Nous
-              préparons nos étudiants à exceller dans un environnement de santé en constante
-              évolution.
+              Notre institut, spécialisé dans la formation des professionnels paramédicaux,
+              forme depuis 2005 les infirmier(ère)s et aides-soignant(e)s de demain. Accrédités
+              par l'État, nos cursus allient rigueur académique, pratique clinique et stages
+              hospitaliers pour préparer chaque étudiant à exercer avec compétence et
+              humanité dans un système de santé en constante évolution.
             </p>
             <div className="space-y-4">
               {features.map((feature, index) => (
