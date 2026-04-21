@@ -6,17 +6,17 @@ const contactInfo = [
   {
     icon: Phone,
     title: "Téléphone",
-    content: "+33 1 23 45 67 89",
+    content: "+212 537 763 280 / +212 537 263 839",
   },
   {
     icon: Mail,
     title: "Email",
-    content: "contact@ecole-infirmiere.fr",
+    content: "ecole.ifpp.rabat@gmail.com",
   },
   {
     icon: MapPin,
     title: "Adresse",
-    content: "123 Avenue de la Santé, 75000 Paris",
+    content: "Imm. D, Résidence REDA, rue Melilya, Hassan, Rabat",
   },
   {
     icon: Clock,
