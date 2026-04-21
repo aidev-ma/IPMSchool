@@ -20,11 +20,10 @@ const About = () => {
               Un Institut Accrédité au Service de la Santé
             </h2>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-              Notre institut, spécialisé dans la formation des professionnels paramédicaux,
-              forme depuis 2005 les infirmier(ère)s et aides-soignant(e)s de demain. Accrédités
-              par l'État, nos cursus allient rigueur académique, pratique clinique et stages
-              hospitaliers pour préparer chaque étudiant à exercer avec compétence et
-              humanité dans un système de santé en constante évolution.
+              Notre institut est dédié à la formation des futurs professionnels paramédicaux.
+              Nous proposons des cursus accrédités qui allient rigueur académique, pratique
+              clinique et stages hospitaliers, afin de préparer chaque étudiant à exercer
+              avec compétence et humanité dans un système de santé en constante évolution.
             </p>
             <div className="space-y-4">
               {features.map((feature, index) => (
