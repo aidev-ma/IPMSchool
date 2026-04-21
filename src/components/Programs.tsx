@@ -43,7 +43,7 @@ const Programs = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {programs.map((program, index) => {
             const Icon = program.icon;
             return (
@@ -55,6 +55,9 @@ const Programs = () => {
                   <CardTitle className="text-xl">{program.title}</CardTitle>
                   <CardDescription className="text-primary font-semibold">
                     Durée: {program.duration}
+                  </CardDescription>
+                  <CardDescription className="text-muted-foreground">
+                    Admission: {program.admission}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
