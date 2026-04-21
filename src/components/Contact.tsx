@@ -6,17 +6,17 @@ const contactInfo = [
   {
     icon: Phone,
     title: "Téléphone",
-    content: "+33 1 23 45 67 89",
+    content: "+212 537 763 280 / +212 537 263 839",
   },
   {
     icon: Mail,
     title: "Email",
-    content: "contact@ecole-infirmiere.fr",
+    content: "ecole.ifpp.rabat@gmail.com",
   },
   {
     icon: MapPin,
     title: "Adresse",
-    content: "123 Avenue de la Santé, 75000 Paris",
+    content: "Imm. D, Résidence REDA, rue Melilya, Hassan, Rabat",
   },
   {
     icon: Clock,
@@ -76,10 +76,9 @@ const Contact = () => {
                       id="program"
                       className="w-full px-4 py-3 rounded-lg border border-input bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     >
-                      <option>Formation Initiale</option>
-                      <option>Spécialisation Soins Intensifs</option>
-                      <option>Soins Gériatriques</option>
-                      <option>Formation Continue</option>
+                      <option>Infirmier(ère) Polyvalent(e) — 3 ans</option>
+                      <option>Infirmier(ère) Auxiliaire — 2 ans</option>
+                      <option>Aide-Soignant(e) — 12 mois</option>
                     </select>
                   </div>
                   <div>

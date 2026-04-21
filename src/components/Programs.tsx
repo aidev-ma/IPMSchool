@@ -1,32 +1,32 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { BookOpen, Stethoscope, HeartPulse, UserCheck } from "lucide-react";
+import { Stethoscope, HeartPulse, UserCheck } from "lucide-react";
 import classroomImage from "@/assets/classroom.jpg";
 import practiceImage from "@/assets/practice.jpg";
 
 const programs = [
   {
-    icon: BookOpen,
-    title: "Formation Initiale",
-    duration: "3 ans",
-    description: "Programme complet pour devenir infirmier(ère) diplômé(e) d'État avec stages pratiques en milieu hospitalier.",
-  },
-  {
     icon: Stethoscope,
-    title: "Spécialisation Soins Intensifs",
-    duration: "1 an",
-    description: "Perfectionnement en soins critiques et urgences pour les infirmiers expérimentés.",
+    title: "Infirmier(ère) Polyvalent(e)",
+    duration: "3 ans",
+    admission: "Bac toutes disciplines",
+    description:
+      "Cursus complet préparant à la prise en charge globale du patient : évaluation des besoins, planification des soins, application des prescriptions médicales et participation aux programmes de santé publique.",
   },
   {
     icon: HeartPulse,
-    title: "Soins Gériatriques",
-    duration: "1 an",
-    description: "Expertise dans l'accompagnement des personnes âgées et gestion des pathologies liées au vieillissement.",
+    title: "Infirmier(ère) Auxiliaire",
+    duration: "2 ans",
+    admission: "Niveau Bac toutes disciplines",
+    description:
+      "Formation orientée vers les soins de base en milieu hospitalier et ambulatoire, l'hygiène et le confort des patients dépendants, ainsi que l'éducation sanitaire de la population.",
   },
   {
     icon: UserCheck,
-    title: "Formation Continue",
-    duration: "Flexible",
-    description: "Modules courts pour actualiser vos compétences et découvrir les nouvelles pratiques médicales.",
+    title: "Aide-Soignant(e)",
+    duration: "12 mois",
+    admission: "Niveau 3ème année collège",
+    description:
+      "Programme de 1567 heures alternant théorie, pratique et stages pour maîtriser l'hygiène, le confort du malade et accompagner les équipes médicales dans tous les services hospitaliers.",
   },
 ];
 
@@ -43,7 +43,7 @@ const Programs = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           {programs.map((program, index) => {
             const Icon = program.icon;
             return (
@@ -55,6 +55,9 @@ const Programs = () => {
                   <CardTitle className="text-xl">{program.title}</CardTitle>
                   <CardDescription className="text-primary font-semibold">
                     Durée: {program.duration}
+                  </CardDescription>
+                  <CardDescription className="text-muted-foreground">
+                    Admission: {program.admission}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
