@@ -38,10 +38,10 @@ const About = () => {
             <div className="absolute inset-0 bg-gradient-accent rounded-2xl blur-3xl opacity-20" />
             <Card className="relative bg-card border-2 p-8">
               <div className="space-y-8">
-                <Stat number="2005" label="Année de Création" />
-                <Stat number="100%" label="Diplômes Accrédités" />
                 <Stat number="3" label="Filières Paramédicales" />
-                <Stat number="20+" label="Années d'Expérience" />
+                <Stat number="100%" label="Diplômes Accrédités" />
+                <Stat number="1500+" label="Heures de Formation" />
+                <Stat number="100%" label="Stages en Milieu Hospitalier" />
               </div>
             </Card>
           </div>
