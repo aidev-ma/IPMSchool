@@ -9,18 +9,6 @@ const ContactPage = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-1 pt-24 bg-background">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-          <div className="text-center max-w-3xl mx-auto">
-            <h1 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-4">
-              Contactez l'IPMS
-            </h1>
-            <p className="text-xl text-muted-foreground">
-              Une question sur nos programmes, l'admission ou la vie à l'institut ?
-              Notre équipe est à votre écoute.
-            </p>
-          </div>
-        </div>
-
         <Contact />
 
         <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
