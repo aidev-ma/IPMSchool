@@ -116,11 +116,21 @@ export const programsData = [
 const ProgramCard = ({ program }: { program: (typeof programsData)[number] }) => {
   const Icon = program.icon;
   return (
-    <Card className="border-2 hover:shadow-medium transition-all duration-300 hover:-translate-y-1 flex flex-col">
-      <CardHeader>
-        <div className="w-12 h-12 rounded-lg bg-gradient-hero flex items-center justify-center mb-4">
-          <Icon className="h-6 w-6 text-primary-foreground" />
+    <Card className="border-2 hover:shadow-medium transition-all duration-300 hover:-translate-y-1 flex flex-col overflow-hidden">
+      <div className="relative h-52 overflow-hidden">
+        <img
+          src={program.image}
+          alt={program.title}
+          loading="lazy"
+          width={1024}
+          height={640}
+          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+        />
+        <div className="absolute top-3 left-3 w-11 h-11 rounded-lg bg-gradient-hero flex items-center justify-center shadow-medium">
+          <Icon className="h-5 w-5 text-primary-foreground" />
         </div>
+      </div>
+      <CardHeader>
         <CardTitle className="text-xl">{program.title}</CardTitle>
         <div className="flex flex-wrap gap-3 text-sm text-muted-foreground mt-2">
           <span className="inline-flex items-center gap-1"><Clock className="h-4 w-4" /> {program.duration}</span>
