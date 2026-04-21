@@ -1,12 +1,10 @@
 import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-nursing.jpg";
 
 const Hero = () => {
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    element?.scrollIntoView({ behavior: "smooth" });
-  };
+  const navigate = useNavigate();
 
   return (
     <section id="accueil" className="relative min-h-screen flex items-center pt-16">
@@ -34,7 +32,7 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4">
             <Button
               size="lg"
-              onClick={() => scrollToSection("programmes")}
+              onClick={() => navigate("/programmes")}
               className="bg-gradient-hero shadow-medium text-lg group"
             >
               Découvrir nos Programmes
@@ -43,7 +41,7 @@ const Hero = () => {
             <Button
               size="lg"
               variant="outline"
-              onClick={() => scrollToSection("contact")}
+              onClick={() => navigate("/contact")}
               className="text-lg border-2"
             >
               Nous Contacter

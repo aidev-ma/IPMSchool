@@ -4,11 +4,15 @@ import Footer from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Stethoscope, HeartPulse, UserCheck, Clock, GraduationCap, ArrowRight, CheckCircle2 } from "lucide-react";
+import polyvalentImage from "@/assets/program-polyvalent.jpg";
+import auxiliaireImage from "@/assets/program-auxiliaire.jpg";
+import aideSoignantImage from "@/assets/program-aide-soignant.jpg";
 
 export const programsData = [
   {
     slug: "infirmier-polyvalent",
     icon: Stethoscope,
+    image: polyvalentImage,
     title: "Infirmier(ère) Polyvalent(e)",
     duration: "3 ans",
     admission: "Baccalauréat toutes disciplines",
@@ -46,6 +50,7 @@ export const programsData = [
   {
     slug: "infirmier-auxiliaire",
     icon: HeartPulse,
+    image: auxiliaireImage,
     title: "Infirmier(ère) Auxiliaire",
     duration: "2 ans",
     admission: "Niveau Baccalauréat toutes disciplines",
@@ -79,6 +84,7 @@ export const programsData = [
   {
     slug: "aide-soignant",
     icon: UserCheck,
+    image: aideSoignantImage,
     title: "Aide-Soignant(e)",
     duration: "12 mois",
     admission: "Niveau 3ème année du collège",
@@ -137,21 +143,33 @@ const ProgramCard = ({ program }: { program: (typeof programsData)[number] }) =>
 const ProgramDetail = ({ program }: { program: (typeof programsData)[number] }) => {
   const Icon = program.icon;
   return (
-    <article className="max-w-4xl mx-auto">
+    <article className="max-w-5xl mx-auto">
       <Link to="/programmes" className="text-primary hover:underline text-sm mb-6 inline-block">
         ← Retour aux programmes
       </Link>
-      <div className="flex items-start gap-4 mb-6">
-        <div className="w-14 h-14 rounded-lg bg-gradient-hero flex items-center justify-center flex-shrink-0">
-          <Icon className="h-7 w-7 text-primary-foreground" />
-        </div>
-        <div>
-          <h1 className="font-display text-4xl sm:text-5xl font-bold text-foreground">
-            {program.title}
-          </h1>
-          <div className="flex flex-wrap gap-4 text-muted-foreground mt-3">
-            <span className="inline-flex items-center gap-2"><Clock className="h-4 w-4 text-primary" /> Durée : {program.duration}</span>
-            <span className="inline-flex items-center gap-2"><GraduationCap className="h-4 w-4 text-primary" /> Admission : {program.admission}</span>
+
+      <div className="relative h-64 sm:h-80 md:h-96 rounded-2xl overflow-hidden shadow-medium mb-8">
+        <img
+          src={program.image}
+          alt={program.title}
+          loading="lazy"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+          <div className="flex items-start gap-4">
+            <div className="w-14 h-14 rounded-lg bg-gradient-hero flex items-center justify-center flex-shrink-0 shadow-medium">
+              <Icon className="h-7 w-7 text-primary-foreground" />
+            </div>
+            <div>
+              <h1 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
+                {program.title}
+              </h1>
+              <div className="flex flex-wrap gap-4 text-muted-foreground mt-3">
+                <span className="inline-flex items-center gap-2"><Clock className="h-4 w-4 text-primary" /> Durée : {program.duration}</span>
+                <span className="inline-flex items-center gap-2"><GraduationCap className="h-4 w-4 text-primary" /> Admission : {program.admission}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
