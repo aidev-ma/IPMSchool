@@ -76,10 +76,9 @@ const Contact = () => {
                       id="program"
                       className="w-full px-4 py-3 rounded-lg border border-input bg-background text-foreground focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                     >
-                      <option>Formation Initiale</option>
-                      <option>Spécialisation Soins Intensifs</option>
-                      <option>Soins Gériatriques</option>
-                      <option>Formation Continue</option>
+                      <option>Infirmier(ère) Polyvalent(e) — 3 ans</option>
+                      <option>Infirmier(ère) Auxiliaire — 2 ans</option>
+                      <option>Aide-Soignant(e) — 12 mois</option>
                     </select>
                   </div>
                   <div>
