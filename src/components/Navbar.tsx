@@ -20,8 +20,8 @@ const Navbar = () => {
     <nav className="fixed top-0 w-full bg-background/95 backdrop-blur-sm border-b border-border z-50 shadow-soft">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link to="/" onClick={close} className="cursor-pointer">
-            <img src={ipmsLogo} alt="IPMS Logo" className="h-16 w-auto object-contain" />
+          <Link to="/" onClick={close} className="flex h-full items-center cursor-pointer">
+            <img src={ipmsLogo} alt="IPMS Logo" className="h-14 sm:h-[3.75rem] w-auto object-contain" />
           </Link>
 
           <div className="hidden md:flex items-center space-x-8">
