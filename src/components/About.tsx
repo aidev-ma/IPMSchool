@@ -1,9 +1,9 @@
 import { CheckCircle2 } from "lucide-react";
 
 const features = [
-  "Institut accrédité par l'État pour ses formations paramédicales",
-  "Sous tutelle du Secrétariat d'État chargé de la Formation Professionnelle",
-  "Programmes conformes aux standards nationaux du secteur de la santé",
+  "Formations paramédicales conçues avec exigence et sens du terrain",
+  "Équipe pédagogique mobilisée autour de la réussite des apprenants",
+  "Programmes structurés pour développer des compétences solides en santé",
   "Stages encadrés dans des structures hospitalières publiques et privées",
   "Pédagogie en alternance théorie, pratique et terrain",
   "Équipe pédagogique composée de professionnels de santé en exercice",
@@ -17,11 +17,11 @@ const About = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-6">
-              Un Institut Accrédité au Service de la Santé
+              Un Institut Engagé au Service de la Santé
             </h2>
             <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
               Notre institut est dédié à la formation des futurs professionnels paramédicaux.
-              Nous proposons des cursus accrédités qui allient rigueur académique, pratique
+              Nous proposons des cursus de qualité qui allient rigueur académique, pratique
               clinique et stages hospitaliers, afin de préparer chaque étudiant à exercer
               avec compétence et humanité dans un système de santé en constante évolution.
             </p>
@@ -39,7 +39,7 @@ const About = () => {
             <Card className="relative bg-card border-2 p-8">
               <div className="space-y-8">
                 <Stat number="3" label="Filières Paramédicales" />
-                <Stat number="100%" label="Diplômes Accrédités" />
+                <Stat number="100%" label="Engagement Apprenants" />
                 <Stat number="1500+" label="Heures de Formation" />
                 <Stat number="100%" label="Stages en Milieu Hospitalier" />
               </div>
