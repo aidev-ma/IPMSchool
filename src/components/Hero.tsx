@@ -14,11 +14,11 @@ const Hero = () => {
           alt="Étudiants infirmiers dans une salle de formation moderne"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/85 to-background/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background/75 via-background/50 to-background/15" />
       </div>
       
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="max-w-2xl">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16 sm:pt-36 lg:pt-44 lg:pb-24">
+        <div className="max-w-xl lg:translate-y-8">
           <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
             Votre Avenir en{" "}
             <span className="bg-gradient-hero bg-clip-text text-transparent">
