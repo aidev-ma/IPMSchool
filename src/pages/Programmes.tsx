@@ -258,7 +258,7 @@ const Programmes = () => {
                   Nos Programmes de Formation
                 </h1>
                 <p className="text-xl text-muted-foreground">
-                  Trois cursus accrédités pour former les professionnels paramédicaux de demain.
+                  Trois cursus de qualité pour former les professionnels paramédicaux de demain.
                   Choisissez celui qui correspond à votre projet.
                 </p>
               </div>

@@ -28,8 +28,8 @@ const values = [
 ];
 
 const features = [
-  "Institut accrédité par l'État pour ses formations paramédicales",
-  "Programmes conformes aux standards nationaux du secteur de la santé",
+  "Formations paramédicales conçues avec exigence et sens du terrain",
+  "Programmes structurés pour développer des compétences solides en santé",
   "Stages encadrés en milieu hospitalier public et privé",
   "Pédagogie en alternance théorie, pratique et terrain",
   "Équipe pédagogique composée de professionnels de santé en exercice",
@@ -40,7 +40,7 @@ const stats = [
   { icon: GraduationCap, number: "3", label: "Filières paramédicales" },
   { icon: Building2, number: "100%", label: "Stages hospitaliers" },
   { icon: Users, number: "1500+", label: "Heures de formation" },
-  { icon: Sparkles, number: "100%", label: "Diplômes accrédités" },
+  { icon: Sparkles, number: "100%", label: "Engagement apprenants" },
 ];
 
 const APropos = () => {
@@ -53,7 +53,7 @@ const APropos = () => {
           <div className="absolute inset-0 z-0">
             <img
               src={aboutStudents}
-              alt="Étudiants de l'IPMS en formation à Rabat"
+              alt="Étudiants d'IPM School en formation à Rabat"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/40" />
@@ -61,7 +61,7 @@ const APropos = () => {
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
             <div className="max-w-2xl">
               <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-                <Sparkles className="h-4 w-4" /> À propos de l'IPMS
+                <Sparkles className="h-4 w-4" /> À propos d'IPM School
               </span>
               <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
                 Former la nouvelle génération{" "}
@@ -70,7 +70,7 @@ const APropos = () => {
                 </span>
               </h1>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                À Rabat, l'IPMS forme des infirmier(ère)s et aides-soignant(e)s engagés,
+                À Rabat, IPM School forme des infirmier(ère)s et aides-soignant(e)s engagés,
                 rigoureusement préparés à exercer dans les structures publiques et privées
                 du Royaume.
               </p>
@@ -122,8 +122,8 @@ const APropos = () => {
                 Un établissement à taille humaine, ancré dans le système de santé marocain
               </h2>
               <p className="text-muted-foreground mb-4 leading-relaxed">
-                L'IPMS est un institut spécialisé dans la formation des professionnels de la
-                santé, basé à Hassan, au cœur de Rabat. Nos cursus accrédités préparent les
+                IPM School est un institut spécialisé dans la formation des professionnels de la
+                santé, basé à Hassan, au cœur de Rabat. Nos cursus de qualité préparent les
                 futurs infirmier(ère)s et aides-soignant(e)s à répondre aux besoins du
                 système de santé marocain et international.
               </p>
@@ -135,7 +135,7 @@ const APropos = () => {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="rounded-2xl overflow-hidden shadow-medium aspect-[3/4]">
-                <img src={classroomImage} alt="Salle de classe IPMS" className="w-full h-full object-cover" />
+                <img src={classroomImage} alt="Salle de classe IPM School" className="w-full h-full object-cover" />
               </div>
               <div className="rounded-2xl overflow-hidden shadow-medium aspect-[3/4] mt-8">
                 <img src={practiceImage} alt="Pratique clinique" className="w-full h-full object-cover" />
@@ -170,8 +170,8 @@ const APropos = () => {
                   </div>
                   <h3 className="font-display text-2xl font-bold mb-4">Notre Vision</h3>
                   <p className="text-muted-foreground leading-relaxed">
-                    Devenir une référence de la formation paramédicale au Maroc, reconnue
-                    pour la qualité de ses diplômés et son engagement envers l'amélioration
+                    Devenir une référence de la formation paramédicale au Maroc, portée
+                    par la qualité de ses diplômés et son engagement envers l'amélioration
                     continue des soins.
                   </p>
                 </CardContent>
@@ -236,7 +236,7 @@ const APropos = () => {
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top_right,white,transparent_60%)]" />
             <div className="relative">
               <h2 className="font-display text-3xl sm:text-4xl font-bold text-primary-foreground mb-4">
-                Rejoignez l'IPMS
+                Rejoignez IPM School
               </h2>
               <p className="text-primary-foreground/90 mb-8 max-w-2xl mx-auto text-lg">
                 Découvrez nos programmes ou contactez-nous pour échanger avec notre équipe sur votre projet professionnel.

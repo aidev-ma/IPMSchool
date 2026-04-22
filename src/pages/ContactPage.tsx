@@ -38,7 +38,7 @@ const ContactPage = () => {
                   <Mail className="h-6 w-6 text-primary-foreground" />
                 </div>
                 <h3 className="font-semibold mb-1">Email</h3>
-                <p className="text-sm text-muted-foreground break-all">ecole.ipms.rabat@gmail.com</p>
+                <p className="text-sm text-muted-foreground break-all">ecole.ipm.school.rabat@gmail.com</p>
               </CardContent>
             </Card>
             <Card className="border-2">
@@ -56,7 +56,7 @@ const ContactPage = () => {
           <Card className="border-2 overflow-hidden">
             <div className="aspect-[16/9] w-full">
               <iframe
-                title="Localisation IPMS - Hassan, Rabat"
+                title="Localisation IPM School - Hassan, Rabat"
                 src="https://www.google.com/maps?q=Rue+Melilya,+Hassan,+Rabat&output=embed"
                 className="w-full h-full border-0"
                 loading="lazy"
