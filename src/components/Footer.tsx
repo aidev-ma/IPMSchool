@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div className="col-span-2">
             <div className="mb-4">
-              <img src={schoolLogo} alt="Logo IPM School" className="h-16 w-auto object-contain" />
+              <img src={schoolLogo} alt="Logo IPMSchool" className="h-16 w-auto object-contain" />
             </div>
             <p className="text-muted-foreground mb-4">
               International Private Medical School - Former les professionnels de santé de demain avec excellence et passion.
@@ -80,7 +80,7 @@ const Footer = () => {
         </div>
         
         <div className="border-t border-border pt-8 text-center text-muted-foreground">
-          <p>© 2025 IPM School - International Private Medical School. Tous droits réservés.</p>
+          <p>© 2025 IPMSchool - International Private Medical School. Tous droits réservés.</p>
         </div>
       </div>
     </footer>
