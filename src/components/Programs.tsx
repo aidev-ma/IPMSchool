@@ -44,7 +44,7 @@ const Programs = () => {
             Nos Programmes de Formation
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Des formations reconnues et adaptées aux besoins du secteur de la santé
+            Des formations de qualité adaptées aux besoins du secteur de la santé
           </p>
         </div>
 
