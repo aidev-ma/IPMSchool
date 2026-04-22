@@ -56,7 +56,7 @@ const ContactPage = () => {
           <Card className="border-2 overflow-hidden">
             <div className="aspect-[16/9] w-full">
               <iframe
-                title="Localisation IPM School - Hassan, Rabat"
+                title="Localisation IPMSchool - Hassan, Rabat"
                 src="https://www.google.com/maps?q=Rue+Melilya,+Hassan,+Rabat&output=embed"
                 className="w-full h-full border-0"
                 loading="lazy"

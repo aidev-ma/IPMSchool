@@ -39,7 +39,7 @@ All colors MUST be HSL.
 
     --radius: 0.75rem;
     
-    /* IPM School theme gradients */
+    /* IPMSchool theme gradients */
     --gradient-hero: linear-gradient(135deg, hsl(207 100% 24%), hsl(180 66% 43%));
     --gradient-accent: linear-gradient(135deg, hsl(180 66% 43%), hsl(190 78% 44%));
     
