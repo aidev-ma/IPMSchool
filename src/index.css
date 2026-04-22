@@ -9,43 +9,43 @@ All colors MUST be HSL.
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 210 24% 16%;
+    --foreground: 207 58% 16%;
 
     --card: 0 0% 100%;
-    --card-foreground: 210 24% 16%;
+    --card-foreground: 207 58% 16%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 210 24% 16%;
+    --popover-foreground: 207 58% 16%;
 
-    --primary: 206 100% 25%;
+    --primary: 207 100% 24%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 181 82% 39%;
+    --primary-glow: 180 66% 43%;
 
-    --secondary: 201 64% 94%;
-    --secondary-foreground: 206 100% 25%;
+    --secondary: 196 62% 94%;
+    --secondary-foreground: 207 100% 24%;
 
-    --muted: 200 36% 96%;
-    --muted-foreground: 204 22% 42%;
+    --muted: 195 38% 96%;
+    --muted-foreground: 205 31% 39%;
 
-    --accent: 181 82% 39%;
+    --accent: 180 66% 43%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 201 32% 89%;
-    --input: 201 32% 89%;
-    --ring: 181 82% 39%;
+    --border: 196 34% 88%;
+    --input: 196 34% 88%;
+    --ring: 180 66% 43%;
 
     --radius: 0.75rem;
     
     /* IPMS theme gradients */
-    --gradient-hero: linear-gradient(135deg, hsl(206 100% 25%), hsl(181 82% 39%));
-    --gradient-accent: linear-gradient(135deg, hsl(181 82% 39%), hsl(195 85% 47%));
+    --gradient-hero: linear-gradient(135deg, hsl(207 100% 24%), hsl(180 66% 43%));
+    --gradient-accent: linear-gradient(135deg, hsl(180 66% 43%), hsl(190 78% 44%));
     
     /* Shadows */
-    --shadow-soft: 0 4px 20px -4px hsl(206 100% 25% / 0.16);
-    --shadow-medium: 0 8px 30px -6px hsl(206 100% 25% / 0.24);
+    --shadow-soft: 0 4px 20px -4px hsl(207 100% 24% / 0.16);
+    --shadow-medium: 0 8px 30px -6px hsl(207 100% 24% / 0.24);
     
     /* Transitions */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);

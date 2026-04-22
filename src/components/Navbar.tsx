@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import ipmsLogo from "@/assets/ipms-logo.jpg";
+import ipmsLogo from "@/assets/ipms-logo.png";
 import { Button } from "./ui/button";
 
 const links = [
