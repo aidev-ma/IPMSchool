@@ -38,7 +38,7 @@ const ContactPage = () => {
                   <Mail className="h-6 w-6 text-primary-foreground" />
                 </div>
                 <h3 className="font-semibold mb-1">Email</h3>
-                <p className="text-sm text-muted-foreground break-all">ecole.ipms.rabat@gmail.com</p>
+                <p className="text-sm text-muted-foreground break-all">ecole.ipmschool.rabat@gmail.com</p>
               </CardContent>
             </Card>
             <Card className="border-2">

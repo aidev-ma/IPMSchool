@@ -1,5 +1,5 @@
 import { Facebook, Instagram, Linkedin } from "lucide-react";
-import ipmsLogo from "@/assets/ipms-logo.png";
+import schoolLogo from "@/assets/ipm-school-logo.png";
 
 const Footer = () => {
   return (
@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div className="col-span-2">
             <div className="mb-4">
-              <img src={ipmsLogo} alt="Logo IPM School" className="h-16 w-auto object-contain" />
+              <img src={schoolLogo} alt="Logo IPM School" className="h-16 w-auto object-contain" />
             </div>
             <p className="text-muted-foreground mb-4">
               International Private Medical School - Former les professionnels de santé de demain avec excellence et passion.
