@@ -24,8 +24,6 @@ const Hero = () => {
             alt="Étudiants infirmiers IPMSchool en milieu hospitalier"
             className="w-full h-full object-cover object-right"
           />
-          {/* Left-side gradient to ensure text readability without filtering the subjects */}
-          <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-transparent lg:via-background/75 lg:to-transparent" />
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 lg:py-40">
