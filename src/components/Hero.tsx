@@ -14,18 +14,20 @@ const Hero = () => {
           alt="Étudiants infirmiers dans une salle de formation moderne"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-l from-background/85 via-background/60 to-transparent lg:from-background/80 lg:via-background/40 lg:to-transparent" />
       </div>
-      
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16 sm:pt-36 lg:pt-44 lg:pb-24 flex lg:justify-end">
-        <div className="max-w-xl lg:translate-y-8 lg:text-left">
-          <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-foreground mb-6 leading-tight">
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-16 sm:pt-36 lg:pt-44 lg:pb-24 flex lg:justify-end w-full">
+        <div className="max-w-xl lg:translate-y-8 rounded-2xl bg-background/70 backdrop-blur-md ring-1 ring-border/40 shadow-strong p-6 sm:p-8 lg:p-10">
+          <span className="inline-block mb-4 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold tracking-[0.18em] uppercase">
+            IPMSchool · Rabat
+          </span>
+          <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-[1.05] tracking-tight">
             Votre Avenir en{" "}
             <span className="bg-gradient-hero bg-clip-text text-transparent">
               Soins de Santé
             </span>
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
+          <p className="text-lg sm:text-xl text-foreground/80 mb-8 leading-relaxed">
             Rejoignez une formation d'excellence qui vous prépare aux défis du
             monde médical moderne. Devenez l'infirmier(ère) que vous aspirez à être.
           </p>
