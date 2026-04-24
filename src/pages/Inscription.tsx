@@ -15,7 +15,8 @@ import {
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "@/hooks/use-toast";
-import { GraduationCap, Send } from "lucide-react";
+import { Send } from "lucide-react";
+import inscriptionHero from "@/assets/inscription-hero.jpg";
 
 const filieres = [
   { slug: "infirmier-polyvalent", label: "Infirmier(ère) Polyvalent(e)", niveaux: ["1ère année", "2ème année"] },
@@ -31,40 +32,43 @@ const bacOptions = [
 
 const phoneRegex = /^[+0-9\s()-]{8,20}$/;
 
-const schema = z
-  .object({
-    nom: z.string().trim().min(2, "Nom trop court").max(100, "Nom trop long"),
-    telephone: z.string().trim().max(20).optional().or(z.literal("")),
-    whatsapp: z.string().trim().max(20).optional().or(z.literal("")),
-    email: z
-      .string()
-      .trim()
-      .max(255)
-      .email("Email invalide")
-      .optional()
-      .or(z.literal("")),
-    filiere: z.string().min(1, "Veuillez choisir une filière"),
-    niveau: z.string().min(1, "Veuillez choisir un niveau"),
-    bac: z.string().min(1, "Veuillez sélectionner une option"),
-  })
-  .refine((d) => !!d.telephone || !!d.whatsapp, {
-    message: "Téléphone ou WhatsApp est obligatoire",
-    path: ["telephone"],
-  })
-  .refine((d) => !d.telephone || phoneRegex.test(d.telephone), {
-    message: "Numéro de téléphone invalide",
-    path: ["telephone"],
-  })
-  .refine((d) => !d.whatsapp || phoneRegex.test(d.whatsapp), {
-    message: "Numéro WhatsApp invalide",
-    path: ["whatsapp"],
-  });
+// Schema aligné avec une future table Supabase `inscriptions`
+// Colonnes prévues : id (uuid), created_at (timestamptz),
+// nom (text), telephone (text), email (text|null),
+// filiere (text), niveau (text), bac (text), statut (text default 'nouveau')
+const schema = z.object({
+  nom: z.string().trim().min(2, "Nom trop court").max(100, "Nom trop long"),
+  telephone: z
+    .string()
+    .trim()
+    .min(1, "Téléphone obligatoire")
+    .max(20, "Numéro trop long")
+    .regex(phoneRegex, "Numéro de téléphone invalide"),
+  email: z
+    .string()
+    .trim()
+    .max(255)
+    .email("Email invalide")
+    .optional()
+    .or(z.literal("")),
+  filiere: z.string().min(1, "Veuillez choisir une filière"),
+  niveau: z.string().min(1, "Veuillez choisir un niveau"),
+  bac: z.string().min(1, "Veuillez sélectionner une option"),
+});
+
+type InscriptionPayload = {
+  nom: string;
+  telephone: string;
+  email: string | null;
+  filiere: string;
+  niveau: string;
+  bac: string;
+};
 
 const Inscription = () => {
   const [form, setForm] = useState({
     nom: "",
     telephone: "",
-    whatsapp: "",
     email: "",
     filiere: "",
     niveau: "",
@@ -83,7 +87,7 @@ const Inscription = () => {
     setErrors((prev) => ({ ...prev, [k]: "" }));
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const result = schema.safeParse(form);
     if (!result.success) {
@@ -102,25 +106,37 @@ const Inscription = () => {
     }
 
     setSubmitting(true);
-    const filiereLabel = filieres.find((f) => f.slug === form.filiere)?.label ?? form.filiere;
-    const bacLabel = bacOptions.find((b) => b.value === form.bac)?.label ?? form.bac;
+
+    // Payload prêt pour Supabase (table `inscriptions`)
+    const payload: InscriptionPayload = {
+      nom: result.data.nom,
+      telephone: result.data.telephone,
+      email: result.data.email ? result.data.email : null,
+      filiere: result.data.filiere,
+      niveau: result.data.niveau,
+      bac: result.data.bac,
+    };
+
+    // TODO (post-déploiement) : remplacer par l'insertion Supabase
+    // const { error } = await supabase.from('inscriptions').insert(payload);
+    // if (error) { ... }
+
+    const filiereLabel = filieres.find((f) => f.slug === payload.filiere)?.label ?? payload.filiere;
+    const bacLabel = bacOptions.find((b) => b.value === payload.bac)?.label ?? payload.bac;
 
     const message = [
       "Nouvelle demande d'inscription - IPMSchool",
       "",
-      `Nom : ${form.nom}`,
-      form.telephone ? `Téléphone : ${form.telephone}` : null,
-      form.whatsapp ? `WhatsApp : ${form.whatsapp}` : null,
-      form.email ? `Email : ${form.email}` : null,
+      `Nom : ${payload.nom}`,
+      `Téléphone / WhatsApp : ${payload.telephone}`,
+      payload.email ? `Email : ${payload.email}` : null,
       `Filière : ${filiereLabel}`,
-      `Niveau : ${form.niveau}`,
+      `Niveau : ${payload.niveau}`,
       `Baccalauréat : ${bacLabel}`,
     ]
       .filter(Boolean)
       .join("\n");
 
-    const wa = form.whatsapp || form.telephone || "";
-    const waNumber = wa.replace(/[^0-9]/g, "");
     const url = `https://wa.me/212537763280?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank", "noopener,noreferrer");
 
@@ -134,24 +150,26 @@ const Inscription = () => {
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
-      <main className="flex-1 pt-24 bg-background">
-        <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="text-center mb-10">
-            <div className="w-14 h-14 rounded-xl bg-gradient-hero flex items-center justify-center mx-auto mb-4 shadow-soft">
-              <GraduationCap className="h-7 w-7 text-primary-foreground" />
-            </div>
-            <h1 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-3">
-              Inscription
-            </h1>
-            <p className="text-muted-foreground text-lg">
-              Remplissez ce formulaire pour rejoindre IPMSchool. Notre équipe vous recontactera rapidement.
-            </p>
-          </div>
+      <main className="flex-1 pt-16 bg-background">
+        {/* Hero */}
+        <section className="relative w-full h-[260px] sm:h-[340px] lg:h-[420px] overflow-hidden">
+          <img
+            src={inscriptionHero}
+            alt="Équipe médicale IPMSchool présentant l'inscription"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </section>
 
-          <Card className="border-2 shadow-medium">
-            <CardHeader>
-              <CardTitle>Formulaire de candidature</CardTitle>
-              <CardDescription>
+        {/* Formulaire */}
+        <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-16 relative z-10">
+          <Card className="border-2 shadow-strong">
+            <CardHeader className="text-center">
+              <CardTitle className="font-display text-3xl sm:text-4xl">
+                Formulaire d'inscription
+              </CardTitle>
+              <CardDescription className="text-base">
+                Rejoignez IPMSchool — notre équipe vous recontactera rapidement.
+                <br />
                 Les champs marqués <span className="text-primary font-semibold">*</span> sont obligatoires.
               </CardDescription>
             </CardHeader>
@@ -167,41 +185,26 @@ const Inscription = () => {
                     onChange={(e) => update("nom", e.target.value)}
                     placeholder="Prénom et nom"
                     maxLength={100}
+                    autoComplete="name"
                   />
                   {errors.nom && <p className="text-sm text-destructive">{errors.nom}</p>}
                 </div>
 
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="telephone">
-                      Téléphone <span className="text-muted-foreground text-xs">(téléphone ou WhatsApp requis)</span>
-                    </Label>
-                    <Input
-                      id="telephone"
-                      type="tel"
-                      inputMode="tel"
-                      value={form.telephone}
-                      onChange={(e) => update("telephone", e.target.value)}
-                      placeholder="+212 6 00 00 00 00"
-                      maxLength={20}
-                    />
-                    {errors.telephone && <p className="text-sm text-destructive">{errors.telephone}</p>}
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="whatsapp">
-                      WhatsApp <span className="text-muted-foreground text-xs">(ou téléphone)</span>
-                    </Label>
-                    <Input
-                      id="whatsapp"
-                      type="tel"
-                      inputMode="tel"
-                      value={form.whatsapp}
-                      onChange={(e) => update("whatsapp", e.target.value)}
-                      placeholder="+212 6 00 00 00 00"
-                      maxLength={20}
-                    />
-                    {errors.whatsapp && <p className="text-sm text-destructive">{errors.whatsapp}</p>}
-                  </div>
+                <div className="space-y-2">
+                  <Label htmlFor="telephone">
+                    Téléphone ou WhatsApp <span className="text-primary">*</span>
+                  </Label>
+                  <Input
+                    id="telephone"
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    value={form.telephone}
+                    onChange={(e) => update("telephone", e.target.value)}
+                    placeholder="+212 6 00 00 00 00"
+                    maxLength={20}
+                  />
+                  {errors.telephone && <p className="text-sm text-destructive">{errors.telephone}</p>}
                 </div>
 
                 <div className="space-y-2">
@@ -211,6 +214,7 @@ const Inscription = () => {
                   <Input
                     id="email"
                     type="email"
+                    autoComplete="email"
                     value={form.email}
                     onChange={(e) => update("email", e.target.value)}
                     placeholder="exemple@email.com"
