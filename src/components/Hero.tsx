@@ -28,9 +28,7 @@ const Hero = () => {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 lg:py-40">
           <div className="max-w-2xl">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-semibold tracking-[0.18em] uppercase mb-6">
-              <Sparkles className="h-4 w-4" /> IPMSchool · Rabat
-            </span>
+
             <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-[1.05] tracking-tight">
               Votre Avenir en{" "}
               <span className="bg-gradient-hero bg-clip-text text-transparent">
