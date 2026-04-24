@@ -13,29 +13,40 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "@/hooks/use-toast";
 import { Send } from "lucide-react";
 import inscriptionHero from "@/assets/inscription-hero.jpg";
+import ipmLogo from "@/assets/ipm-school-logo.png";
 
 const filieres = [
-  { slug: "infirmier-polyvalent", label: "Infirmier(ère) Polyvalent(e)", niveaux: ["1ère année", "2ème année"] },
-  { slug: "infirmier-auxiliaire", label: "Infirmier(ère) Auxiliaire", niveaux: ["1ère année", "2ème année"] },
-  { slug: "aide-soignant", label: "Aide-Soignant(e)", niveaux: ["1ère année"] },
+  {
+    slug: "infirmier-polyvalent",
+    label: "Infirmier(ère) Polyvalent(e)",
+    niveaux: ["1ère année", "2ème année", "3ème année"],
+  },
+  {
+    slug: "infirmier-auxiliaire",
+    label: "Infirmier(ère) Auxiliaire",
+    niveaux: ["1ère année", "2ème année"],
+  },
+  {
+    slug: "aide-soignant",
+    label: "Aide-Soignant(e)",
+    niveaux: ["1ère année"],
+  },
 ];
 
 const bacOptions = [
   { value: "sciences", label: "Bac Sciences" },
-  { value: "lettres", label: "Bac Lettres & Sciences Humaines" },
-  { value: "niveau-bac", label: "Niveau Bac (sans diplôme)" },
+  { value: "lettres", label: "Bac Lettres" },
+  { value: "sciences-eco", label: "Bac Sciences Économiques" },
+  { value: "niveau-bac", label: "Niveau Bac (toutes disciplines)" },
+  { value: "3eme-college", label: "3ème année collège" },
 ];
 
 const phoneRegex = /^[+0-9\s()-]{8,20}$/;
 
 // Schema aligné avec une future table Supabase `inscriptions`
-// Colonnes prévues : id (uuid), created_at (timestamptz),
-// nom (text), telephone (text), email (text|null),
-// filiere (text), niveau (text), bac (text), statut (text default 'nouveau')
 const schema = z.object({
   nom: z.string().trim().min(2, "Nom trop court").max(100, "Nom trop long"),
   telephone: z
@@ -77,10 +88,13 @@ const Inscription = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
 
-  const niveaux = useMemo(
-    () => filieres.find((f) => f.slug === form.filiere)?.niveaux ?? [],
+  const selectedFiliere = useMemo(
+    () => filieres.find((f) => f.slug === form.filiere),
     [form.filiere],
   );
+  const niveaux = selectedFiliere?.niveaux ?? [];
+  // Pour Aide-Soignant : une seule année => champ niveau grisé (auto-rempli)
+  const niveauDisabled = !form.filiere || selectedFiliere?.slug === "aide-soignant";
 
   const update = (k: keyof typeof form, v: string) => {
     setForm((prev) => ({ ...prev, [k]: v }));
@@ -107,7 +121,6 @@ const Inscription = () => {
 
     setSubmitting(true);
 
-    // Payload prêt pour Supabase (table `inscriptions`)
     const payload: InscriptionPayload = {
       nom: result.data.nom,
       telephone: result.data.telephone,
@@ -116,10 +129,6 @@ const Inscription = () => {
       niveau: result.data.niveau,
       bac: result.data.bac,
     };
-
-    // TODO (post-déploiement) : remplacer par l'insertion Supabase
-    // const { error } = await supabase.from('inscriptions').insert(payload);
-    // if (error) { ... }
 
     const filiereLabel = filieres.find((f) => f.slug === payload.filiere)?.label ?? payload.filiere;
     const bacLabel = bacOptions.find((b) => b.value === payload.bac)?.label ?? payload.bac;
@@ -151,19 +160,24 @@ const Inscription = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-1 pt-16 bg-background">
-        {/* Hero */}
-        <section className="relative w-full h-[260px] sm:h-[340px] lg:h-[420px] overflow-hidden">
+        {/* Hero — recadrage uniquement par le bas pour ne pas couper les visages */}
+        <section className="relative w-full h-[220px] sm:h-[300px] md:h-[360px] lg:h-[420px] overflow-hidden">
           <img
             src={inscriptionHero}
             alt="Équipe médicale IPMSchool présentant l'inscription"
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover object-top"
           />
         </section>
 
         {/* Formulaire */}
         <section className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-16 relative z-10">
           <Card className="border-2 shadow-strong">
-            <CardHeader className="text-center">
+            <CardHeader className="text-center items-center">
+              <img
+                src={ipmLogo}
+                alt="Logo IPMSchool"
+                className="h-16 sm:h-20 w-auto mx-auto mb-3"
+              />
               <CardTitle className="font-display text-3xl sm:text-4xl">
                 Formulaire d'inscription
               </CardTitle>
@@ -232,7 +246,12 @@ const Inscription = () => {
                       value={form.filiere}
                       onValueChange={(v) => {
                         update("filiere", v);
-                        update("niveau", "");
+                        // Auto-sélection pour Aide-Soignant (1 seule année)
+                        if (v === "aide-soignant") {
+                          update("niveau", "1ère année");
+                        } else {
+                          update("niveau", "");
+                        }
                       }}
                     >
                       <SelectTrigger id="filiere">
@@ -256,11 +275,17 @@ const Inscription = () => {
                     <Select
                       value={form.niveau}
                       onValueChange={(v) => update("niveau", v)}
-                      disabled={!form.filiere}
+                      disabled={niveauDisabled}
                     >
                       <SelectTrigger id="niveau">
                         <SelectValue
-                          placeholder={form.filiere ? "Choisir un niveau" : "Sélectionnez d'abord une filière"}
+                          placeholder={
+                            !form.filiere
+                              ? "Sélectionnez d'abord une filière"
+                              : selectedFiliere?.slug === "aide-soignant"
+                                ? "1ère année (unique)"
+                                : "Choisir un niveau"
+                          }
                         />
                       </SelectTrigger>
                       <SelectContent>
@@ -271,30 +296,31 @@ const Inscription = () => {
                         ))}
                       </SelectContent>
                     </Select>
+                    {selectedFiliere?.slug === "aide-soignant" && (
+                      <p className="text-xs text-muted-foreground">
+                        Une seule année de formation pour Aide-Soignant(e).
+                      </p>
+                    )}
                     {errors.niveau && <p className="text-sm text-destructive">{errors.niveau}</p>}
                   </div>
                 </div>
 
-                <div className="space-y-3">
-                  <Label>
+                <div className="space-y-2">
+                  <Label htmlFor="bac">
                     Type de baccalauréat <span className="text-primary">*</span>
                   </Label>
-                  <RadioGroup
-                    value={form.bac}
-                    onValueChange={(v) => update("bac", v)}
-                    className="grid sm:grid-cols-3 gap-3"
-                  >
-                    {bacOptions.map((opt) => (
-                      <Label
-                        key={opt.value}
-                        htmlFor={`bac-${opt.value}`}
-                        className="flex items-center gap-3 rounded-lg border-2 border-input p-4 cursor-pointer hover:border-primary/50 hover:bg-secondary/40 transition-colors has-[[data-state=checked]]:border-primary has-[[data-state=checked]]:bg-secondary/60"
-                      >
-                        <RadioGroupItem id={`bac-${opt.value}`} value={opt.value} />
-                        <span className="text-sm font-medium">{opt.label}</span>
-                      </Label>
-                    ))}
-                  </RadioGroup>
+                  <Select value={form.bac} onValueChange={(v) => update("bac", v)}>
+                    <SelectTrigger id="bac">
+                      <SelectValue placeholder="Choisir votre niveau scolaire" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {bacOptions.map((opt) => (
+                        <SelectItem key={opt.value} value={opt.value}>
+                          {opt.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   {errors.bac && <p className="text-sm text-destructive">{errors.bac}</p>}
                 </div>
 
