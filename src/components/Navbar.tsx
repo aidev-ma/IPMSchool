@@ -8,6 +8,7 @@ const links = [
   { to: "/", label: "Accueil" },
   { to: "/programmes", label: "Programmes" },
   { to: "/a-propos", label: "À Propos" },
+  { to: "/inscription", label: "Inscription" },
 ];
 
 const Navbar = () => {
