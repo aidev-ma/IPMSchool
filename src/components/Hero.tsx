@@ -27,19 +27,20 @@ const Hero = () => {
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 lg:py-40">
-          <div className="max-w-2xl">
-
-            <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-[1.05] tracking-tight">
-              Votre Avenir en{" "}
-              <span className="bg-gradient-hero bg-clip-text text-transparent">
-                Soins de Santé
-              </span>
-            </h1>
-            <p className="text-lg sm:text-xl text-foreground/85 mb-8 leading-relaxed">
-              Rejoignez une formation d'excellence qui vous prépare aux défis du
-              monde médical moderne. Devenez l'infirmier(ère) que vous aspirez à être.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+          <div className="max-w-xl">
+            <div className="bg-white/55 backdrop-blur-md rounded-2xl p-6 sm:p-8 ring-1 ring-white/40 shadow-soft">
+              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-primary mb-5 leading-[1.05] tracking-tight">
+                Votre Avenir en{" "}
+                <span className="bg-gradient-hero bg-clip-text text-transparent">
+                  Soins de Santé
+                </span>
+              </h1>
+              <p className="text-lg lg:text-xl text-foreground leading-relaxed">
+                Rejoignez une formation d'excellence qui vous prépare aux défis du
+                monde médical moderne. Devenez l'infirmier(ère) que vous aspirez à être.
+              </p>
+            </div>
+            <div className="flex flex-col sm:flex-row gap-4 mt-6">
               <Button
                 size="lg"
                 onClick={() => navigate("/programmes")}
