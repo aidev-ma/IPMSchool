@@ -56,7 +56,6 @@ const APropos = () => {
               alt="Étudiants d'IPMSchool en formation à Rabat"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-background via-background/90 to-background/40" />
           </div>
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
             <div className="max-w-2xl">
@@ -69,24 +68,11 @@ const APropos = () => {
                   des soignants au Maroc
                 </span>
               </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+              <p className="text-lg text-muted-foreground leading-relaxed">
                 À Rabat, IPMSchool forme des infirmier(ère)s et aides-soignant(e)s engagés,
                 rigoureusement préparés à exercer dans les structures publiques et privées
                 du Royaume.
               </p>
-              <div className="flex flex-wrap gap-4">
-                <Link to="/programmes">
-                  <Button size="lg" className="bg-gradient-hero shadow-medium group">
-                    Découvrir nos programmes
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
-                <Link to="/contact">
-                  <Button size="lg" variant="outline" className="border-2">
-                    Nous contacter
-                  </Button>
-                </Link>
-              </div>
             </div>
           </div>
         </section>
