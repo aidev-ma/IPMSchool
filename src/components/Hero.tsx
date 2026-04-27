@@ -1,6 +1,6 @@
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
-import { ArrowRight, GraduationCap, Building2, Users, HeartHandshake, Sparkles } from "lucide-react";
+import { ArrowRight, GraduationCap, Building2, Users, HeartHandshake } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-nursing.jpg";
 
@@ -16,8 +16,48 @@ const Hero = () => {
 
   return (
     <section id="accueil" className="relative pt-16 bg-background">
-      {/* HERO */}
-      <div className="relative overflow-hidden">
+      {/* HERO — Mobile / Tablette : layout empilé */}
+      <div className="lg:hidden">
+        <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] overflow-hidden">
+          <img
+            src={heroImage}
+            alt="Étudiants infirmiers IPMSchool en milieu hospitalier"
+            className="w-full h-full object-cover object-top"
+          />
+        </div>
+        <div className="px-4 sm:px-6 py-8 max-w-2xl mx-auto">
+          <h1 className="font-display text-3xl sm:text-4xl font-bold text-primary mb-4 leading-tight tracking-tight">
+            Votre Avenir en{" "}
+            <span className="bg-gradient-hero bg-clip-text text-transparent">
+              Soins de Santé
+            </span>
+          </h1>
+          <p className="text-base sm:text-lg text-foreground mb-6 leading-relaxed">
+            Formation d'excellence pour devenir l'infirmier(ère) que vous aspirez à être.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Button
+              size="lg"
+              onClick={() => navigate("/programmes")}
+              className="bg-gradient-hero shadow-medium text-base group w-full sm:w-auto"
+            >
+              Découvrir nos Programmes
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              onClick={() => navigate("/inscription")}
+              className="text-base border-2 w-full sm:w-auto"
+            >
+              S'inscrire
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* HERO — Desktop : superposé */}
+      <div className="hidden lg:block relative overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img
             src={heroImage}
@@ -63,7 +103,7 @@ const Hero = () => {
       </div>
 
       {/* STATS */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20 pb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-0 lg:-mt-12 relative z-20 pb-16">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {stats.map((s) => {
             const Icon = s.icon;
