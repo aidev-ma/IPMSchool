@@ -48,53 +48,13 @@ const APropos = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       <main className="flex-1 pt-16 bg-background">
-        {/* HERO */}
+        {/* HERO — image seule */}
         <section className="relative overflow-hidden">
-          <div className="absolute inset-0 z-0">
-            <img
-              src={aboutStudents}
-              alt="Étudiants d'IPMSchool en formation à Rabat"
-              className="w-full h-full object-cover"
-            />
-          </div>
-          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
-            <div className="max-w-2xl">
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-                <Sparkles className="h-4 w-4" /> À propos d'IPMSchool
-              </span>
-              <h1 className="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
-                Former la nouvelle génération{" "}
-                <span className="bg-gradient-hero bg-clip-text text-transparent">
-                  des soignants au Maroc
-                </span>
-              </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                À Rabat, IPMSchool forme des infirmier(ère)s et aides-soignant(e)s engagés,
-                rigoureusement préparés à exercer dans les structures publiques et privées
-                du Royaume.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* STATS */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-12 relative z-20">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {stats.map((s) => {
-              const Icon = s.icon;
-              return (
-                <Card key={s.label} className="border-2 shadow-medium">
-                  <CardContent className="p-6 text-center">
-                    <div className="w-12 h-12 rounded-lg bg-gradient-hero flex items-center justify-center mx-auto mb-3">
-                      <Icon className="h-6 w-6 text-primary-foreground" />
-                    </div>
-                    <div className="font-display text-3xl font-bold text-foreground">{s.number}</div>
-                    <div className="text-sm text-muted-foreground mt-1">{s.label}</div>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
+          <img
+            src={aboutStudents}
+            alt="Étudiants d'IPMSchool en formation à Rabat"
+            className="w-full h-auto object-cover"
+          />
         </section>
 
         {/* NOTRE INSTITUT */}
