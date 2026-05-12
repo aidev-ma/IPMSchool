@@ -28,8 +28,8 @@ const ContactPage = () => {
                   <Phone className="h-6 w-6 text-primary-foreground" />
                 </div>
                 <h3 className="font-semibold mb-1">Téléphone</h3>
-                <p className="text-sm text-muted-foreground">+212 537 763 280</p>
-                <p className="text-sm text-muted-foreground">+212 537 263 839</p>
+                <p className="text-sm text-muted-foreground">+212 537 20 20 83</p>
+                <p className="text-sm text-muted-foreground">+212 650 11 70 11</p>
               </CardContent>
             </Card>
             <Card className="border-2">

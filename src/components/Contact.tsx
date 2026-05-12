@@ -13,7 +13,7 @@ const contactInfo: {
   {
     icon: Phone,
     title: "Téléphone",
-    content: "+212 537 763 280 / +212 537 263 839",
+    content: ["+212 537 20 20 83", "+212 650 11 70 11"],
   },
   {
     icon: Mail,
