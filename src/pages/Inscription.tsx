@@ -146,14 +146,44 @@ const Inscription = () => {
       .filter(Boolean)
       .join("\n");
 
-    const url = `https://wa.me/212537763280?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank", "noopener,noreferrer");
+    try {
+      const response = await fetch('/api/register.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
 
-    toast({
-      title: "Demande envoyée",
-      description: "Nous vous recontacterons très prochainement.",
-    });
-    setSubmitting(false);
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        toast({
+          title: "Demande envoyée",
+          description: "Votre inscription a bien été enregistrée. Nous vous recontacterons très prochainement.",
+        });
+        
+        // Optionnel : Réinitialiser le formulaire après succès
+        setForm({
+          nom: "",
+          telephone: "",
+          email: "",
+          filiere: "",
+          niveau: "",
+          bac: "",
+        });
+      } else {
+        throw new Error(data.message || "Erreur lors de l'inscription");
+      }
+    } catch (error: any) {
+      toast({
+        title: "Erreur",
+        description: error.message || "Impossible d'envoyer la demande. Veuillez réessayer.",
+        variant: "destructive",
+      });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (

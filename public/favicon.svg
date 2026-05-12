@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="IPMSchool">
+  <rect width="100" height="100" rx="16" fill="#ffffff" stroke="#0b2744" stroke-width="2.5"/>
+  <text
+    x="50"
+    y="57"
+    text-anchor="middle"
+    textLength="82"
+    lengthAdjust="spacing"
+    font-family="system-ui, Segoe UI, Arial, sans-serif"
+    font-size="13"
+    font-weight="800"
+    fill="#0b2744"
+  >IPMSchool</text>
+</svg>
