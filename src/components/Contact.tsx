@@ -2,7 +2,11 @@ import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 
-const contactInfo = [
+const contactInfo: {
+  icon: typeof Phone;
+  title: string;
+  content: string | string[];
+}[] = [
   {
     icon: Phone,
     title: "Téléphone",
@@ -11,12 +15,15 @@ const contactInfo = [
   {
     icon: Mail,
     title: "Email",
-    content: "ecole.ifpp.rabat@gmail.com",
+    content: [
+      "Contact : Contact@ipmschool.ma",
+      "Inscription : Inscription@ipmschool.ma",
+    ],
   },
   {
     icon: MapPin,
     title: "Adresse",
-    content: "Imm. D, Résidence REDA, rue Melilya, Hassan, Rabat",
+    content: "23 Av Chellah, Hassan, Rabat",
   },
   {
     icon: Clock,
@@ -111,7 +118,15 @@ const Contact = () => {
                     </div>
                     <div>
                       <h4 className="font-semibold text-foreground mb-1">{info.title}</h4>
-                      <p className="text-muted-foreground">{info.content}</p>
+                      {Array.isArray(info.content) ? (
+                        info.content.map((line, i) => (
+                          <p key={i} className="text-muted-foreground break-all">
+                            {line}
+                          </p>
+                        ))
+                      ) : (
+                        <p className="text-muted-foreground">{info.content}</p>
+                      )}
                     </div>
                   </CardContent>
                 </Card>

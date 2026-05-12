@@ -19,7 +19,7 @@ const ContactPage = () => {
                   <MapPin className="h-6 w-6 text-primary-foreground" />
                 </div>
                 <h3 className="font-semibold mb-1">Adresse</h3>
-                <p className="text-sm text-muted-foreground">Imm. D, Résidence REDA, rue Melilya, Hassan, Rabat</p>
+                <p className="text-sm text-muted-foreground">23 Av Chellah, Hassan, Rabat</p>
               </CardContent>
             </Card>
             <Card className="border-2">
@@ -38,7 +38,8 @@ const ContactPage = () => {
                   <Mail className="h-6 w-6 text-primary-foreground" />
                 </div>
                 <h3 className="font-semibold mb-1">Email</h3>
-                <p className="text-sm text-muted-foreground break-all">ecole.ipm.school.rabat@gmail.com</p>
+                <p className="text-sm text-muted-foreground break-all">Contact : Contact@ipmschool.ma</p>
+                <p className="text-sm text-muted-foreground break-all">Inscription : Inscription@ipmschool.ma</p>
               </CardContent>
             </Card>
             <Card className="border-2">
@@ -56,8 +57,8 @@ const ContactPage = () => {
           <Card className="border-2 overflow-hidden">
             <div className="aspect-[16/9] w-full">
               <iframe
-                title="Localisation IPMSchool - Hassan, Rabat"
-                src="https://www.google.com/maps?q=Rue+Melilya,+Hassan,+Rabat&output=embed"
+                title="Localisation IPMSchool - 23 Av Chellah, Hassan, Rabat"
+                src="https://www.google.com/maps?q=23+Av+Chellah,+Hassan,+Rabat&output=embed"
                 className="w-full h-full border-0"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
