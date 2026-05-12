@@ -74,6 +74,7 @@ type InscriptionPayload = {
   filiere: string;
   niveau: string;
   bac: string;
+  website: string; // honeypot anti-spam (toujours vide côté humain)
 };
 
 const Inscription = () => {
@@ -85,6 +86,8 @@ const Inscription = () => {
     niveau: "",
     bac: "",
   });
+  // Honeypot : champ caché, hors du state principal pour ne pas polluer la validation Zod
+  const [honeypot, setHoneypot] = useState("");
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
 
