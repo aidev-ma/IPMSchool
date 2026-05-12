@@ -176,6 +176,7 @@ const Inscription = () => {
           niveau: "",
           bac: "",
         });
+        setHoneypot("");
       } else {
         throw new Error(data.message || "Erreur lors de l'inscription");
       }
@@ -223,6 +224,28 @@ const Inscription = () => {
             </CardHeader>
             <CardContent>
               <form onSubmit={onSubmit} className="space-y-6" noValidate>
+                {/* Honeypot anti-spam : champ invisible pour les humains, visible pour les bots */}
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    left: "-9999px",
+                    width: "1px",
+                    height: "1px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <label htmlFor="website">Site web</label>
+                  <input
+                    id="website"
+                    type="text"
+                    name="website"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    value={honeypot}
+                    onChange={(e) => setHoneypot(e.target.value)}
+                  />
+                </div>
                 <div className="space-y-2">
                   <Label htmlFor="nom">
                     Nom complet <span className="text-primary">*</span>
