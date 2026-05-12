@@ -131,6 +131,7 @@ const Inscription = () => {
       filiere: result.data.filiere,
       niveau: result.data.niveau,
       bac: result.data.bac,
+      website: honeypot,
     };
 
     const filiereLabel = filieres.find((f) => f.slug === payload.filiere)?.label ?? payload.filiere;
