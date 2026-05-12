@@ -13,8 +13,7 @@ return [
     // Ajoutez ici les domaines autorisés pour les requêtes CORS
     'allowed_origins' => [
         'https://ipmschool.ma',
-        'https://www.ipmschool.ma',
-        'http://localhost:5173' // Pour le développement local (à commenter en production si souhaité)
+        'https://www.ipmschool.ma'
     ],
 ];
 ?>
