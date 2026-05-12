@@ -1,84 +1,82 @@
-## Problème
+# Plan — Durcissement sécurité backend PHP
 
-Sur mobile/tablette (Android, ≤768px), l'image hero (1376×768, personnages côté droit) est `object-cover object-right` et le panneau verre dépoli est superposé en haut au-dessus des visages → conflit de lisibilité ET les visages peuvent être masqués / cadrés trop serré.
+Objectif : corriger les 6 points soulevés sur `api/db.php` et `api/register.php`, plus une petite adaptation frontend pour le honeypot. Aucune modification du design ni de la logique métier.
 
-## Solution recommandée — Layout empilé sur mobile
+## 1. Externaliser les credentials DB (`api/db.php`)
 
-Au lieu de superposer texte et image sur petit écran, on **sépare verticalement** : image en haut (visages entiers visibles), texte + boutons en dessous sur fond clair. Sur desktop (≥lg) on garde le layout actuel superposé qui fonctionne bien.
+- Lire la config depuis un fichier **hors webroot** : `../config.local.php` (à placer par vous au-dessus de `httpdocs/` dans Plesk).
+- Ce fichier retournera un tableau :
+  ```php
+  <?php
+  return [
+    'db_host' => 'localhost',
+    'db_name' => 'marianne_db',
+    'db_user' => 'marianne_user',
+    'db_pass' => '...',
+    'allowed_origins' => ['https://ipmschool.ma', 'https://www.ipmschool.ma'],
+  ];
+  ```
+- `db.php` charge ce tableau, expose `$pdo` et `$config`.
+- Si le fichier est absent → réponse JSON 500 propre (pas de `die()` brut), sans révéler de détails.
+- Activer `PDO::ATTR_EMULATE_PREPARES = false` et `PDO::ATTR_DEFAULT_FETCH_MODE = FETCH_ASSOC`.
+- Fournir un `api/config.local.example.php` versionné comme modèle, et documenter le chemin attendu dans un commentaire en tête de `db.php`.
 
-```text
-MOBILE / TABLETTE (<lg)         DESKTOP (≥lg)
-┌──────────────────────┐        ┌──────────────────────────┐
-│   IMAGE (visages)    │        │ [Panneau] │   IMAGE      │
-│   ratio 4:3, top     │        │  texte    │  (visages    │
-├──────────────────────┤        │  boutons  │   à droite)  │
-│  Titre               │        └──────────────────────────┘
-│  Paragraphe court    │
-│  [Boutons]           │
-└──────────────────────┘
-            ↓
-       [4 stats]
-```
+> Note : à la livraison, je laisserai des valeurs placeholder dans `config.local.example.php`. Vous copierez ce fichier en `../config.local.php` (au-dessus de `httpdocs/`) sur Plesk et y mettrez les vrais identifiants. Confirmez-moi le **vrai domaine de production** (je suppose `ipmschool.ma` + `www.ipmschool.ma`) — sinon ajustez la liste `allowed_origins` directement dans `config.local.php`.
 
-### Détails
+## 2. CORS restreint (`api/register.php`)
 
-**Mobile / tablette (<lg) :**
-- Image en bloc séparé en haut : `aspect-[4/3] sm:aspect-[16/10]`, `object-cover object-top` pour préserver les visages (jamais coupés en haut, recadrage par le bas si nécessaire).
-- Texte sur fond `bg-background` plein dessous → contraste maximal, plus besoin de glassmorphism.
-- Paragraphe **raccourci sur mobile** via une version courte conditionnelle (gardé entier sur desktop).
-- Boutons en pleine largeur (`w-full sm:w-auto`).
+- Lire `$config['allowed_origins']`.
+- Vérifier `$_SERVER['HTTP_ORIGIN']` ; si présent dans la whitelist → renvoyer `Access-Control-Allow-Origin: <origin>` + `Vary: Origin`.
+- Sinon → ne pas envoyer d'en-tête CORS (le navigateur bloquera).
+- Conserver le handler OPTIONS (preflight) avec les mêmes règles.
 
-**Desktop (≥lg) :**
-- On conserve le rendu actuel : image en background, panneau verre dépoli à gauche, paragraphe complet.
+## 3. Corriger `bindParam` + retirer `htmlspecialchars` à l'insertion
 
-### Paragraphe : version courte mobile
+- Remplacer tous les `bindParam(':x', htmlspecialchars(...))` par `bindValue(':x', $valeur, PDO::PARAM_STR)`.
+- Stocker les valeurs **brutes** (trim uniquement). L'échappement HTML se fera à l'affichage (admin).
+- L'email nullable utilisera `bindValue(..., PDO::PARAM_NULL)` quand vide.
 
-- Mobile : « Formation d'excellence pour devenir infirmier(ère). »
-- Desktop : version actuelle complète.
+## 4. Validation stricte côté PHP (whitelists)
 
-(Alternative si tu préfères : supprimer totalement le paragraphe sur mobile — je peux le faire à la place. Par défaut je garde la version courte, plus impactante qu'aucun texte.)
+Au-dessus du bloc d'insertion, valider chaque champ :
 
-## Détails techniques
+- `nom` : string, trim, 2–100 chars, regex `/^[\p{L}\s'’\-]+$/u`.
+- `telephone` : trim, regex `/^[+0-9\s().\-]{8,20}$/`.
+- `email` : optionnel ; si fourni → `filter_var(..., FILTER_VALIDATE_EMAIL)`, max 255.
+- `filiere` : whitelist `['infirmier-polyvalent','infirmier-auxiliaire','aide-soignant']` (slugs identiques au front).
+- `niveau` : whitelist dépendant de la filière (mêmes valeurs que `src/pages/Inscription.tsx`) :
+  - polyvalent → `1ère année|2ème année|3ème année`
+  - auxiliaire → `1ère année|2ème année`
+  - aide-soignant → `1ère année`
+- `bac` : whitelist `['bac-obtenu','niveau-bac','sans-bac']` (à aligner avec `bacOptions` du front).
+- En cas d'échec → `400` JSON `{"success":false,"message":"Données invalides","field":"<name>"}`.
 
-Fichier modifié : `src/components/Hero.tsx`
+## 5. Honeypot anti-spam
 
-1. Wrapper le bloc HERO actuel dans `hidden lg:block` (rendu desktop superposé inchangé).
-2. Ajouter un nouveau bloc `lg:hidden` empilé :
-   - `<div>` image : `relative w-full aspect-[4/3] sm:aspect-[16/10] overflow-hidden` + `<img className="w-full h-full object-cover object-top">`.
-   - `<div>` contenu : `px-4 sm:px-6 py-8` avec h1 (`text-3xl sm:text-4xl`), p court, boutons (`w-full sm:w-auto`).
-3. Stats inchangées (déjà responsive `grid-cols-2 lg:grid-cols-4`), juste ajuster le `-mt-12` qui ne s'applique qu'en desktop : `lg:-mt-12 mt-0`.
+**Frontend (`src/pages/Inscription.tsx`)** :
+- Ajouter un champ caché `website` dans le state initial (`""`), rendu dans un `<div>` en `position:absolute; left:-9999px; height:0; overflow:hidden;` avec `tabIndex={-1}`, `autoComplete="off"`, `aria-hidden="true"`.
+- L'inclure dans le payload JSON envoyé.
 
-```tsx
-{/* Mobile / Tablette */}
-<div className="lg:hidden">
-  <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] overflow-hidden">
-    <img src={heroImage} alt="..." className="w-full h-full object-cover object-top" />
-  </div>
-  <div className="px-4 sm:px-6 py-8 max-w-2xl mx-auto">
-    <h1 className="font-display text-3xl sm:text-4xl font-bold text-primary mb-4 leading-tight">
-      Votre Avenir en{" "}
-      <span className="bg-gradient-hero bg-clip-text text-transparent">Soins de Santé</span>
-    </h1>
-    <p className="text-base sm:text-lg text-foreground mb-6 leading-relaxed">
-      Formation d'excellence pour devenir l'infirmier(ère) que vous aspirez à être.
-    </p>
-    <div className="flex flex-col sm:flex-row gap-3">
-      <Button ... className="w-full sm:w-auto ...">Découvrir nos Programmes</Button>
-      <Button ... className="w-full sm:w-auto ...">S'inscrire</Button>
-    </div>
-  </div>
-</div>
+**Backend (`api/register.php`)** :
+- Si `!empty($data->website)` → renvoyer **HTTP 201 + `{"success":true,"message":"Inscription enregistrée avec succès."}`** (faux succès silencieux choisi), **sans** insérer en base.
+- Optionnel : `error_log("honeypot triggered from " . $_SERVER['REMOTE_ADDR']);`.
 
-{/* Desktop — layout actuel inchangé */}
-<div className="hidden lg:block relative overflow-hidden">
-  ...
-</div>
-```
+## 6. Robustesse / hygiène
 
-## Question rapide
+- En cas d'exception PDO : log via `error_log()`, réponse générique `500 {"success":false,"message":"Erreur serveur."}` (ne plus exposer `$e->getMessage()`).
+- Forcer `Content-Type: application/json; charset=UTF-8` sur toutes les sorties.
+- Refuser tout `REQUEST_METHOD` autre que `POST`/`OPTIONS` → `405`.
 
-Sur mobile, tu préfères :
-- **(défaut) Paragraphe court** : 1 phrase impactante.
-- **Pas de paragraphe** : juste titre + boutons, encore plus aéré.
+## Fichiers touchés
 
-Si pas de réponse, j'applique le paragraphe court.
+- `api/db.php` — refactor (chargement config externe, options PDO).
+- `api/register.php` — CORS dynamique, validation stricte, bindValue, honeypot, gestion d'erreurs.
+- `api/config.local.example.php` — **nouveau**, modèle à copier hors webroot.
+- `src/pages/Inscription.tsx` — ajout du champ honeypot caché + envoi dans le payload.
+
+## Hors périmètre (à voir plus tard si vous le souhaitez)
+
+- Rate-limiting (par IP, ex. table `inscription_attempts` ou fail2ban Plesk).
+- Notification email admin sur nouvelle inscription.
+- Table `consents` RGPD avec `consent_at`.
+- Captcha (hCaptcha/Turnstile) si le honeypot ne suffit pas.
