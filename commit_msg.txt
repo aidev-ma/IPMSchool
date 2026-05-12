@@ -1,7 +1,0 @@
-Add PHP backend API and connect it to React frontend
-
-- Added `api/` directory with `db.php` and `register.php` for MariaDB connection and data insertion.
-- Created `api/database.sql` for table creation.
-- Updated `Inscription.tsx` to send POST requests to the PHP API instead of WhatsApp.
-- Added `.htaccess` in `public/` for SPA routing and excluding API requests.
-- Included generated favicons and package modifications.
