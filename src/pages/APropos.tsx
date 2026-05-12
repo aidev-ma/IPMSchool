@@ -58,13 +58,10 @@ const APropos = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-background/80 via-background/40 to-transparent" />
           <div className="relative z-10 max-w-7xl mx-auto h-full px-4 sm:px-6 lg:px-8 flex items-center">
             <div className="max-w-xl">
-              <span className="text-primary font-semibold text-sm uppercase tracking-wider">
-                Notre école
-              </span>
               <h1 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mt-2 leading-tight">
                 À Propos d'IPMSchool
               </h1>
-              <p className="text-base sm:text-lg text-muted-foreground mt-3">
+              <p className="text-base sm:text-lg text-foreground mt-3">
                 Un institut paramédical à Rabat, engagé pour former les soignant(e)s de demain.
               </p>
             </div>
