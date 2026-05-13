@@ -2,10 +2,14 @@
   RewriteEngine On
   RewriteBase /
   RewriteRule ^index\.html$ - [L]
-  
+
   # Ne pas rediriger les requêtes vers le dossier api (nos scripts PHP)
   RewriteCond %{REQUEST_URI} !^/api/
-  
+
+  # Ne pas rediriger les challenges Let's Encrypt / ACME
+  # (sinon la validation HTTP-01 échoue car index.html est servi à la place du token)
+  RewriteCond %{REQUEST_URI} !^/\.well-known/
+
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteCond %{REQUEST_FILENAME} !-l
