@@ -16,8 +16,11 @@
  *   - mail_from_name   (ex: 'IPM School - Site Web')
  *
  * Optionnel :
- *   - mail_enabled     (bool, défaut true) : permet de désactiver tout envoi
- *   - mail_debug       (bool, défaut false) : active la sortie debug PHPMailer dans error_log
+ *   - mail_enabled          (bool, défaut true)  : permet de désactiver tout envoi
+ *   - mail_debug            (bool, défaut false) : sortie debug PHPMailer dans error_log
+ *   - mail_smtp_skip_verify (bool, défaut false) : désactive la vérification du
+ *     certificat SSL/TLS (utile pour smtp_host = 'localhost' où le cert ne
+ *     matche pas le hostname). À n'activer que pour des connexions locales.
  */
 
 require_once __DIR__ . '/lib/PHPMailer/PHPMailer.php';
@@ -85,6 +88,16 @@ function sendNotificationEmail(
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
         } elseif ($secure === 'tls' || $secure === 'starttls') {
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        }
+
+        if (!empty($config['mail_smtp_skip_verify'])) {
+            $mail->SMTPOptions = [
+                'ssl' => [
+                    'verify_peer'       => false,
+                    'verify_peer_name'  => false,
+                    'allow_self_signed' => true,
+                ],
+            ];
         }
 
         $mail->CharSet  = PHPMailer::CHARSET_UTF8;
