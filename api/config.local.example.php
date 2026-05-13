@@ -13,8 +13,10 @@ return [
 
     // ----- SMTP (envoi des emails de notification) -----
     // Sur Plesk, créez d'abord une boîte dédiée (ex: noreply@votre-domaine.tld)
-    // puis renseignez ses identifiants ici.
-    'smtp_host'   => 'mail.ipmschool.ma',
+    // puis renseignez ses identifiants ici. Le smtp_host est celui affiché par
+    // Plesk dans Mail Settings ("Outgoing mail server"), généralement le
+    // domaine principal (ex: ipmschool.ma), pas le sous-domaine mail.
+    'smtp_host'   => 'ipmschool.ma',
     'smtp_port'   => 465,                // 465 (SSL) ou 587 (TLS)
     'smtp_secure' => 'ssl',              // 'ssl' pour 465, 'tls' pour 587
     'smtp_user'   => 'noreply@ipmschool.ma',
@@ -32,6 +34,10 @@ return [
     'mail_enabled' => true,
     // Optionnel : log SMTP détaillé dans error_log pour debug (true/false)
     'mail_debug'   => false,
+    // Optionnel : désactive la vérification du certificat SSL.
+    // Indispensable si smtp_host = 'localhost' (le cert ne couvre pas localhost).
+    // Sans risque ici car la connexion ne sort pas de la machine.
+    'mail_smtp_skip_verify' => false,
 
     // ----- CORS -----
     // Domaines autorisés pour les requêtes JavaScript du site
