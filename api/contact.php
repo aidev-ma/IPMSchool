@@ -1,5 +1,6 @@
 <?php
 require_once 'db.php';
+require_once 'mailer.php';
 
 header("Content-Type: application/json; charset=UTF-8");
 
@@ -88,6 +89,60 @@ try {
     $stmt->bindValue(':message', $message, PDO::PARAM_STR);
 
     if ($stmt->execute()) {
+        // Notification email à l'école — non bloquant : un échec d'envoi
+        // est loggé mais ne change pas la réponse au visiteur.
+        $to = $config['mail_to_contact'] ?? '';
+        if ($to !== '') {
+            $programmeDisplay = $programme !== '' ? $programme : '(non précisé)';
+            $subject = "Nouveau message de contact : $nom";
+
+            $rows = [
+                'Nom'       => $nom,
+                'Email'     => $email,
+                'Programme' => $programmeDisplay,
+                'Date'      => date('d/m/Y H:i'),
+            ];
+
+            $htmlRows = '';
+            $textLines = [];
+            foreach ($rows as $label => $value) {
+                $htmlRows .= '<tr><td style="padding:6px 12px;background:#f4f6f8;font-weight:600;">'
+                    . mailerEscape($label) . '</td><td style="padding:6px 12px;">'
+                    . mailerEscape($value) . '</td></tr>';
+                $textLines[] = "$label : $value";
+            }
+
+            $messageHtml = nl2br(mailerEscape($message));
+
+            $htmlBody = '<!doctype html><html><body style="font-family:Arial,sans-serif;color:#222;">'
+                . '<h2 style="color:#0a4d8c;">Nouveau message depuis le formulaire de contact</h2>'
+                . '<table cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:1px solid #ddd;margin-bottom:20px;">'
+                . $htmlRows
+                . '</table>'
+                . '<h3 style="color:#0a4d8c;margin-bottom:6px;">Message</h3>'
+                . '<div style="padding:12px;background:#f4f6f8;border-left:3px solid #0a4d8c;">'
+                . $messageHtml
+                . '</div>'
+                . '<p style="margin-top:20px;color:#666;font-size:12px;">'
+                . 'Email automatique — répondez à cet email pour contacter directement le visiteur.'
+                . '</p></body></html>';
+
+            $textBody = "Nouveau message depuis le formulaire de contact\n\n"
+                . implode("\n", $textLines)
+                . "\n\nMessage :\n" . $message
+                . "\n\n-- Email automatique envoyé depuis ipmschool.ma";
+
+            sendNotificationEmail(
+                $config,
+                $to,
+                $subject,
+                $htmlBody,
+                $textBody,
+                $email,
+                $nom
+            );
+        }
+
         http_response_code(201);
         echo json_encode(["success" => true, "message" => "Message envoyé avec succès."]);
     } else {

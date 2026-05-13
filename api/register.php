@@ -1,5 +1,6 @@
 <?php
 require_once 'db.php';
+require_once 'mailer.php';
 
 header("Content-Type: application/json; charset=UTF-8");
 
@@ -124,6 +125,56 @@ try {
     $stmt->bindValue(':bac', $bac, PDO::PARAM_STR);
 
     if ($stmt->execute()) {
+        // Notification email à l'école — non bloquant : un échec d'envoi
+        // est loggé mais ne change pas la réponse au visiteur.
+        $to = $config['mail_to_inscription'] ?? '';
+        if ($to !== '') {
+            $emailDisplay = $email !== '' ? $email : '(non fourni)';
+            $subject = "Nouvelle inscription : $nom ($filiere)";
+
+            $rows = [
+                'Nom'        => $nom,
+                'Téléphone'  => $telephone,
+                'Email'      => $emailDisplay,
+                'Filière'    => $filiere,
+                'Niveau'     => $niveau,
+                'Bac'        => $bac,
+                'Date'       => date('d/m/Y H:i'),
+            ];
+
+            $htmlRows = '';
+            $textLines = [];
+            foreach ($rows as $label => $value) {
+                $htmlRows .= '<tr><td style="padding:6px 12px;background:#f4f6f8;font-weight:600;">'
+                    . mailerEscape($label) . '</td><td style="padding:6px 12px;">'
+                    . mailerEscape($value) . '</td></tr>';
+                $textLines[] = "$label : $value";
+            }
+
+            $htmlBody = '<!doctype html><html><body style="font-family:Arial,sans-serif;color:#222;">'
+                . '<h2 style="color:#0a4d8c;">Nouvelle demande d\'inscription</h2>'
+                . '<p>Une nouvelle inscription vient d\'être enregistrée depuis le site :</p>'
+                . '<table cellspacing="0" cellpadding="0" style="border-collapse:collapse;border:1px solid #ddd;">'
+                . $htmlRows
+                . '</table>'
+                . '<p style="margin-top:20px;color:#666;font-size:12px;">'
+                . 'Email automatique — répondez à cet email pour contacter directement le prospect.'
+                . '</p></body></html>';
+
+            $textBody = "Nouvelle demande d'inscription\n\n" . implode("\n", $textLines)
+                . "\n\n-- Email automatique envoyé depuis ipmschool.ma";
+
+            sendNotificationEmail(
+                $config,
+                $to,
+                $subject,
+                $htmlBody,
+                $textBody,
+                $email !== '' ? $email : null,
+                $nom
+            );
+        }
+
         http_response_code(201);
         echo json_encode(["success" => true, "message" => "Inscription enregistrée avec succès."]);
     } else {
@@ -131,7 +182,6 @@ try {
         echo json_encode(["success" => false, "message" => "Impossible d'enregistrer l'inscription."]);
     }
 } catch (Exception $e) {
-    // 6. Robustesse / hygiène : ne plus exposer le message d'erreur
     error_log("Erreur lors de l'insertion : " . $e->getMessage());
     http_response_code(500);
     echo json_encode(["success" => false, "message" => "Erreur serveur."]);
